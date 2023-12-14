@@ -16,32 +16,35 @@ def read_lines_to_list(file_path):
 
 lines = read_lines_to_list("txt")
 sum = 0
-
+copiesOfACard=[1]*len(lines)
 
 cardsWithoutStart=[]
 for each in lines:
     cardsWithoutStart.append(re.sub(r'^.*?:', ':', each))
 
-for line in cardsWithoutStart:
+
+def howManyCorrect(winning,your):
     correct=0
-    cardPoints=0
+    for each in winning:
+        if each in your:
+            if each!="":
+                correct+=1
+    return correct
+
+def evaluateLine(lineNumber,winning,your):
+    for i in range (howManyCorrect(winning,your)):
+
+        copiesOfACard[lineNumber+i+1]+=copiesOfACard[lineNumber]
+
+
+lineCount=0
+for line in cardsWithoutStart:
     row=line.split("|")
     winningNumbers=row[0].split(" ")
     yourNumbers=row[1].split(" ")
-
-    for each in winningNumbers:
-        if each in yourNumbers:
-            if each!="":
-                print(each)
-                correct+=1
+    evaluateLine(lineCount,winningNumbers,yourNumbers)
+    lineCount+=1
 
 
-    if correct>=2:
-        power=correct-2
-        print("{}, correct: {}, added to sum: {}".format(line,correct,pow(2,power)))
-        sum+=pow(2,correct-1)
-    elif correct==1:
-        sum+=correct
-
-
+for each in copiesOfACard: sum+=each
 print(sum)
