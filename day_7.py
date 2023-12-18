@@ -69,6 +69,7 @@ def compareSameValueHands(hands): #places lists in ascending order
         handsAsIndeces.append(asIndeces)
     handsAsIndeces.sort(reverse=True)
 
+
     for each in handsAsIndeces:
         result.append(joinedListToSortableListDict["".join(each)])
     return result
